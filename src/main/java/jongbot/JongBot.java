@@ -1,3 +1,5 @@
+package jongbot;
+
 import java.util.Scanner;
 
 import jongbot.exceptions.*;
@@ -119,7 +121,7 @@ public class JongBot {
         int byIndex = arguments.indexOf("/by");
 
         if (arguments.isBlank()) {
-            throw new EmptyDeadlineDescriptonException();
+            throw new EmptyDeadlineDescriptionException();
         }
         if (byIndex == -1) {
             throw new MissingDeadlineException();
@@ -196,7 +198,7 @@ public class JongBot {
 
     private static void welcomeMessage() {
         newline();
-        System.out.println("Hello! My name is Jongbot");
+        System.out.println("Hello! My name is JongBot");
         System.out.println("How may I help you?");
         newline();
     }
