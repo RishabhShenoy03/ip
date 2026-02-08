@@ -1,29 +1,12 @@
 import java.util.Scanner;
 
+import jongbot.exceptions.*;
+
 public class JongBot {
 
     public static int numLines = 0;
     public static final int MAX_SIZE = 100;
-
     public static Task[] list = new Task[MAX_SIZE];
-
-    public static void newline() {
-        System.out.println();
-    }
-
-    public static void dashLine() {
-        System.out.println("----------------------------------------");
-    }
-
-    public static void printList(){
-        System.out.println("Here's your list:");
-        for (int i = 0; i < numLines; i ++){
-            if (list[i].description.equals("list")){
-                continue;
-            }
-            System.out.println( i+1 + ":" + list[i]);
-        }
-    }
 
     public static void main(String[] args) {
         welcomeMessage();
@@ -49,55 +32,55 @@ public class JongBot {
 
             newline();
             dashLine();
+            try {
+                switch (command) {
+                case "todo":
+                    handleTodo(arguments);
+                    break;
 
-            switch (command) {
-            case "todo":
-                handleTodo(arguments);
-                break;
+                case "deadline":
+                    handleDeadline(arguments);
+                    break;
 
-            case "deadline":
-                handleDeadline(arguments);
-                break;
+                case "event":
+                    handleEvent(arguments);
+                    break;
 
-            case "event":
-                handleEvent(arguments);
-                break;
+                case "bye":
+                    handleBye();
+                    return;
 
-            case "bye":
-                handleBye();
-                return;
+                case "list":
+                    handleList();
+                    break;
 
-            case "list":
-                if (numLines == 0){
-                    System.out.println("List is empty, insert some tasks!");
+                case "mark": {
+                    markTask(arguments);
                     break;
                 }
-                printList();
-                break;
 
-            case "mark": {
-                markTask(arguments);
-                break;
-            }
+                case "unmark": {
+                    unmarkTask(arguments);
+                    break;
+                }
 
-            case "unmark": {
-                unmarkTask(arguments);
-                break;
-            }
-
-            default:
-                // insert into list for normal input
-                System.out.println("I don't understand what you mean, please try again");
-                System.out.println("Insert with \"todo\" / \"deadline\" / \"event\"");
-
-                break;
+                default:
+                    // none of the accepted commands
+                    throw new NotAnyException();
+                }
+            } catch (JongExceptions e) {
+                System.out.println(e.getMessage());
             }
             dashLine();
             newline();
         }
     }
 
-    private static void handleTodo(String arguments) {
+    private static void handleTodo(String arguments) throws JongExceptions {
+        if (arguments.isBlank()) {
+            throw new EmptyTodoException();
+        }
+
         Todo todo = new Todo(arguments);
         list[numLines] = todo;
         numLines++;
@@ -109,14 +92,17 @@ public class JongBot {
         dashLine();
     }
 
-    private static void handleEvent(String arguments) {
+    private static void handleEvent(String arguments) throws JongExceptions {
         String description;
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
 
-        if (fromIndex == -1 || toIndex == -1){
-            System.out.println("Please include both /from and /to");
-            return;
+        if (arguments.isBlank()) {
+            throw new EmptyEventDescriptionException();
+        }
+
+        if (fromIndex == -1 || toIndex == -1) {
+            throw new MissingEventTimeException();
         }
 
         description = arguments.substring(0, fromIndex).trim();
@@ -128,13 +114,15 @@ public class JongBot {
         echoEvent(description, from, to);
     }
 
-    private static void handleDeadline(String arguments) {
+    private static void handleDeadline(String arguments) throws JongExceptions {
         String description;
         int byIndex = arguments.indexOf("/by");
 
-        if (byIndex == -1){
-            System.out.println("Please include /by");
-            return;
+        if (arguments.isBlank()) {
+            throw new EmptyDeadlineDescriptonException();
+        }
+        if (byIndex == -1) {
+            throw new MissingDeadlineException();
         }
 
         description = arguments.substring(0, byIndex).trim();
@@ -146,23 +134,45 @@ public class JongBot {
         echoDeadline(description, by);
     }
 
-    private static void unmarkTask(String arguments) {
+    private static void unmarkTask(String arguments) throws JongExceptions {
         int taskIndex = Integer.parseInt(arguments);
-        if (taskIndex > numLines || taskIndex < 1){
-            System.out.println("This task does not exist, use 'list' first to check task numbers");
-        } else {
-            list[taskIndex - 1].unmarkTask();
-            System.out.println("Task " + taskIndex + " has been unmarked");
+        if (taskIndex > numLines || taskIndex < 1) {
+            throw new TaskIndexException();
         }
+        list[taskIndex - 1].unmarkTask();
+        System.out.println("Task " + taskIndex + " has been unmarked");
+
     }
 
-    private static void markTask(String arguments) {
+    private static void markTask(String arguments) throws JongExceptions {
         int taskIndex = Integer.parseInt(arguments);
-        if (taskIndex > numLines || taskIndex < 1){
-            System.out.println("This task does not exist, use 'list' first to check task numbers");
-        } else {
-            list[taskIndex - 1].markTask();
-            System.out.println("Task " + taskIndex + " has been marked");
+        if (taskIndex > numLines || taskIndex < 1) {
+            throw new TaskIndexException();
+        }
+        list[taskIndex - 1].markTask();
+        System.out.println("Task " + taskIndex + " has been marked");
+
+    }
+
+    public static void newline() {
+        System.out.println();
+    }
+
+    public static void dashLine() {
+        System.out.println("----------------------------------------");
+    }
+
+    public static void handleList() throws JongExceptions {
+        if (numLines == 0) {
+            throw new EmptyListException();
+        }
+
+        System.out.println("Here's your list:");
+        for (int i = 0; i < numLines; i++) {
+            if (list[i].description.equals("list")) {
+                continue;
+            }
+            System.out.println(i + 1 + ":" + list[i]);
         }
     }
 
