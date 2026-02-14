@@ -73,6 +73,11 @@ public class JongBot {
                     break;
                 }
 
+                case "delete": {
+                    deleteTask(arguments);
+                    break;
+                }
+
                 default:
                     // none of the accepted commands
                     throw new NotAnyException();
@@ -91,8 +96,7 @@ public class JongBot {
         }
 
         Todo todo = new Todo(arguments);
-        list[numLines] = todo;
-        numLines++;
+        list.add(todo);
         echoTodo(arguments);
     }
 
@@ -118,8 +122,7 @@ public class JongBot {
         String from = arguments.substring(fromIndex + 5, toIndex).trim();
         String to = arguments.substring(toIndex + 3).trim();
         Event event = new Event(description, from, to);
-        list[numLines] = event;
-        numLines++;
+        list.add(event);
         echoEvent(description, from, to);
     }
 
@@ -137,28 +140,27 @@ public class JongBot {
         description = arguments.substring(0, byIndex).trim();
         String by = arguments.substring(byIndex + 3).trim();
         Deadline deadline = new Deadline(description, by);
-        list[numLines] = deadline;
-        numLines++;
+        list.add(deadline);
 
         echoDeadline(description, by);
     }
 
     private static void unmarkTask(String arguments) throws JongExceptions {
         int taskIndex = Integer.parseInt(arguments);
-        if (taskIndex > numLines || taskIndex < 1) {
+        if (taskIndex > list.size() || taskIndex < 1) {
             throw new TaskIndexException();
         }
-        list[taskIndex - 1].unmarkTask();
+        list.get(taskIndex - 1).unmarkTask();
         System.out.println("Task " + taskIndex + " has been unmarked");
 
     }
 
     private static void markTask(String arguments) throws JongExceptions {
         int taskIndex = Integer.parseInt(arguments);
-        if (taskIndex > numLines || taskIndex < 1) {
+        if (taskIndex > list.size() || taskIndex < 1) {
             throw new TaskIndexException();
         }
-        list[taskIndex - 1].markTask();
+        list.get(taskIndex - 1).markTask();
         System.out.println("Task " + taskIndex + " has been marked");
 
     }
