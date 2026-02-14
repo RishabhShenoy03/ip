@@ -1,8 +1,6 @@
 package jongbot;
 
 import java.util.Scanner;
-
-import jongbot.exceptions.*;
 import jongbot.exceptions.EmptyDeadlineDescriptionException;
 import jongbot.exceptions.EmptyEventDescriptionException;
 import jongbot.exceptions.EmptyListException;
@@ -13,11 +11,11 @@ import jongbot.exceptions.MissingEventTimeException;
 import jongbot.exceptions.NotAnyException;
 import jongbot.exceptions.TaskIndexException;
 
+import java.util.ArrayList;
+
 public class JongBot {
 
-    public static int numLines = 0;
-    public static final int MAX_SIZE = 100;
-    public static Task[] list = new Task[MAX_SIZE];
+    public static ArrayList<Task> list = new ArrayList<>();
 
     public static void main(String[] args) {
         welcomeMessage();
