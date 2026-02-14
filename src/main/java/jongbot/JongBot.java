@@ -77,6 +77,10 @@ public class JongBot {
                     deleteTask(arguments);
                     break;
                 }
+                case "help":{
+                    help();
+                    break;
+                }
 
                 default:
                     // none of the accepted commands
@@ -196,6 +200,13 @@ public class JongBot {
         System.out.println("Task " + taskIndex + " has been deleted");
     }
 
+    private static void help(){
+        System.out.println("Use \"todo\", \"deadline\", \"event\" to add a task to the list");
+        System.out.println("Use \"list\" to see all tasks");
+        System.out.println("Use \"mark\" / \"unmark\" / \"delete\" followed by the task index to do... exactly that");
+
+    }
+
     private static void echoEvent(String description, String from, String to) {
         System.out.println("Adding this task to the list:");
         System.out.println("[E][ ] " + description + " (from: " + from + ", to: " + to + ")");
@@ -218,6 +229,7 @@ public class JongBot {
         newline();
         System.out.println("Hello! My name is JongBot");
         System.out.println("How may I help you?");
+        System.out.println("Type \"help\" to see all commands");
         newline();
     }
 }
