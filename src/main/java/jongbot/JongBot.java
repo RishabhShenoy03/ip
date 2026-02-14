@@ -174,35 +174,44 @@ public class JongBot {
     }
 
     public static void handleList() throws JongExceptions {
-        if (numLines == 0) {
+        if (list.isEmpty()) {
             throw new EmptyListException();
         }
 
         System.out.println("Here's your list:");
-        for (int i = 0; i < numLines; i++) {
-            if (list[i].description.equals("list")) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).description.equals("list")) {
                 continue;
             }
-            System.out.println(i + 1 + ":" + list[i]);
+            System.out.println(i + 1 + ":" + list.get(i));
         }
+    }
+
+    public static void deleteTask(String arguments) throws JongExceptions {
+        int taskIndex = Integer.parseInt(arguments);
+        if (taskIndex > list.size() || taskIndex < 1) {
+            throw new TaskIndexException();
+        }
+        list.remove(taskIndex - 1);
+        System.out.println("Task " + taskIndex + " has been deleted");
     }
 
     private static void echoEvent(String description, String from, String to) {
         System.out.println("Adding this task to the list:");
         System.out.println("[E][ ] " + description + " (from: " + from + ", to: " + to + ")");
-        System.out.println("Number of tasks in list: " + numLines);
+        System.out.println("Number of tasks in list: " + list.size());
     }
 
     private static void echoDeadline(String description, String by) {
         System.out.println("Adding this task to the list:");
         System.out.println("[D][ ] " + description + " (do by: " + by + ")");
-        System.out.println("Number of tasks in list: " + numLines);
+        System.out.println("Number of tasks in list: " + list.size());
     }
 
     private static void echoTodo(String arguments) {
         System.out.println("Adding this task to the list:");
         System.out.println("[T][ ] " + arguments);
-        System.out.println("Number of tasks in list: " + numLines);
+        System.out.println("Number of tasks in list: " + list.size());
     }
 
     private static void welcomeMessage() {
