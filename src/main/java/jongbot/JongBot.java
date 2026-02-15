@@ -20,10 +20,10 @@ import java.util.ArrayList;
 
 public class JongBot {
 
-    public static ArrayList<Task> list = new ArrayList<>();
+    private static ArrayList<Task> list = new ArrayList<>();
 
-    public static String tasksFilePath = "data/tasks.txt";
-    public static File f = new File(tasksFilePath);
+    private static String tasksFilePath = "data/tasks.txt";
+    private static File f = new File(tasksFilePath);
 
 
     public static void main(String[] args) {
@@ -135,7 +135,7 @@ public class JongBot {
             throw new MissingEventTimeException();
         }
 
-        description = arguments.substring(0, fromIndex).trim();
+        String description = arguments.substring(0, fromIndex).trim();
         String from = arguments.substring(fromIndex + 5, toIndex).trim();
         String to = arguments.substring(toIndex + 3).trim();
         Event event = new Event(description, from, to);
@@ -197,9 +197,6 @@ public class JongBot {
 
         System.out.println("Here's your list:");
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).description.equals("list")) {
-                continue;
-            }
             System.out.println(i + 1 + ":" + list.get(i));
         }
     }
@@ -239,5 +236,63 @@ public class JongBot {
         newline();
         System.out.println(MyConstants.WELCOME_MESSAGE);
         newline();
+    }
+
+    private static void writeToFile(String filePath, ArrayList<Task> list) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (Task task : list) {
+            fw.write(task.toDataString() + "\n");
+        }
+        fw.close();
+    }
+
+    private static void handleFileLine(String line) {
+        String[] parts = line.split(" \\| ");
+        if (parts.length < 3) {
+            return;
+        }
+
+        String type = parts[0];
+        boolean isDone = parts[1].equals("1");
+        String description = parts[2];
+
+        Task task = null;
+        switch (type) {
+        case "T":
+            task = new Todo(description);
+            break;
+        case "D":
+            if (parts.length >= 4) {
+                task = new Deadline(description, parts[3]);
+            }
+            break;
+        case "E":
+            if (parts.length >= 5) {
+                task = new Event(description, parts[3], parts[4]);
+            }
+            break;
+        }
+
+        if (task != null) {
+            if (isDone) {
+                task.markTask();
+            }
+            list.add(task);
+        }
+    }
+
+    private static void loadTasksFromFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return;
+        }
+
+        try (Scanner sc = new Scanner(file)) {
+            while (sc.hasNext()) {
+                handleFileLine(sc.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + filePath);
+        }
     }
 }
