@@ -201,10 +201,7 @@ public class JongBot {
     }
 
     private static void help(){
-        System.out.println("Use \"todo\", \"deadline\", \"event\" to add a task to the list");
-        System.out.println("Use \"list\" to see all tasks");
-        System.out.println("Use \"mark\" / \"unmark\" / \"delete\" followed by the task index to do... exactly that");
-
+        System.out.println(MyConstants.HELP_MESSAGE);
     }
 
     private static void echoEvent(String description, String from, String to) {
@@ -227,9 +224,7 @@ public class JongBot {
 
     private static void welcomeMessage() {
         newline();
-        System.out.println("Hello! My name is JongBot");
-        System.out.println("How may I help you?");
-        System.out.println("Type \"help\" to see all commands");
+        System.out.println(MyConstants.WELCOME_MESSAGE);
         newline();
     }
 }
