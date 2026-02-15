@@ -1,5 +1,10 @@
 package jongbot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import java.util.Scanner;
 import jongbot.exceptions.EmptyDeadlineDescriptionException;
 import jongbot.exceptions.EmptyEventDescriptionException;
@@ -17,8 +22,20 @@ public class JongBot {
 
     public static ArrayList<Task> list = new ArrayList<>();
 
+    public static String tasksFilePath = "data/tasks.txt";
+    public static File f = new File(tasksFilePath);
+
+
     public static void main(String[] args) {
+
+        System.out.println("full path: " + f.getAbsolutePath());
+        System.out.println("file exists?: " + f.exists());
+        System.out.println("is Directory?: " + f.isDirectory());
+
         welcomeMessage();
+
+        loadTasksFromFile(tasksFilePath);
+
         String input;
         Scanner in = new Scanner(System.in);
 
@@ -46,33 +63,26 @@ public class JongBot {
                 case "todo":
                     handleTodo(arguments);
                     break;
-
                 case "deadline":
                     handleDeadline(arguments);
                     break;
-
                 case "event":
                     handleEvent(arguments);
                     break;
-
                 case "bye":
                     handleBye();
                     return;
-
                 case "list":
                     handleList();
                     break;
-
                 case "mark": {
                     markTask(arguments);
                     break;
                 }
-
                 case "unmark": {
                     unmarkTask(arguments);
                     break;
                 }
-
                 case "delete": {
                     deleteTask(arguments);
                     break;
@@ -81,7 +91,6 @@ public class JongBot {
                     help();
                     break;
                 }
-
                 default:
                     // none of the accepted commands
                     throw new NotAnyException();
@@ -106,11 +115,15 @@ public class JongBot {
 
     private static void handleBye() {
         System.out.println("Bye bye! See you soon!");
+        try {
+            writeToFile(tasksFilePath, list);
+        } catch (IOException e) {
+            System.out.println("Error writing to file!");
+        }
         dashLine();
     }
 
     private static void handleEvent(String arguments) throws JongExceptions {
-        String description;
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
 
