@@ -24,10 +24,8 @@ import static jongbot.MyConstants.newline;
 public class JongBot {
 
     private static ArrayList<Task> list = new ArrayList<>();
-
     private static String tasksFilePath = "data/tasks.txt";
     private static File f = new File(tasksFilePath);
-
 
     public static void main(String[] args) {
 
@@ -303,17 +301,25 @@ public class JongBot {
     private static void ensureFileExists(String filePath) {
         try {
             File file = new File(filePath);
+
             File parent = file.getParentFile();
             if (parent != null && !parent.exists()) {
-                parent.mkdirs();   // create ./data directory
-            }
-            if (!file.exists()) {
-                file.createNewFile();   // create tasks.txt
+                if (!parent.mkdirs()) {
+                    throw new IOException("Failed to create directory: "
+                            + parent.getAbsolutePath());
+                }
             }
 
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    throw new IOException("Failed to create file: "
+                            + file.getAbsolutePath());
+                }
+            }
         } catch (IOException e) {
-            System.out.println("Error creating data file.");
+            throw new RuntimeException("Critical error initializing storage", e);
         }
     }
+
 
 }
