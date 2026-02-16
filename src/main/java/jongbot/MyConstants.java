@@ -4,6 +4,7 @@ public class MyConstants {
     public static final String TICK = "✔";
     public static final String WELCOME_MESSAGE = """
             Hello! My name is JongBot
+            I am here to help you manage your todos, deadlines, and events.
             How may I help you?
             Type "help" to see all commands""";
 
@@ -12,4 +13,11 @@ public class MyConstants {
             Use "list" to see all tasks
             Use "mark" / "unmark" / "delete" followed by the task index to do... exactly that""";
 
+    public static void newline() {
+        System.out.println();
+    }
+
+    public static void dashLine() {
+        System.out.println("----------------------------------------");
+    }
 }

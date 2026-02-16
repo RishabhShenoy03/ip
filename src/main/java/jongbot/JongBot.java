@@ -18,6 +18,9 @@ import jongbot.exceptions.TaskIndexException;
 
 import java.util.ArrayList;
 
+import static jongbot.MyConstants.dashLine;
+import static jongbot.MyConstants.newline;
+
 public class JongBot {
 
     private static ArrayList<Task> list = new ArrayList<>();
@@ -34,6 +37,7 @@ public class JongBot {
 
         welcomeMessage();
 
+        ensureFileExists(tasksFilePath);
         loadTasksFromFile(tasksFilePath);
 
         String input;
@@ -182,13 +186,7 @@ public class JongBot {
 
     }
 
-    public static void newline() {
-        System.out.println();
-    }
 
-    public static void dashLine() {
-        System.out.println("----------------------------------------");
-    }
 
     public static void handleList() throws JongExceptions {
         if (list.isEmpty()) {
@@ -281,18 +279,43 @@ public class JongBot {
         }
     }
 
-    private static void loadTasksFromFile(String filePath) {
+    private static void loadTasksFromFile(String filePath){
         File file = new File(filePath);
         if (!file.exists()) {
             return;
         }
-
         try (Scanner sc = new Scanner(file)) {
             while (sc.hasNext()) {
                 handleFileLine(sc.nextLine());
             }
+            try {
+                handleList(); // print previously saved list after parsed
+            } catch (JongExceptions e) {
+                System.out.println(e.getMessage());
+            }
+            dashLine();
+            newline();
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + filePath);
         }
     }
+
+    private static void ensureFileExists(String filePath) {
+        try {
+            File file = new File(filePath);
+
+            File parent = file.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();   // create ./data directory
+            }
+
+            if (!file.exists()) {
+                file.createNewFile();   // create tasks.txt
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error creating data file.");
+        }
+    }
+
 }
