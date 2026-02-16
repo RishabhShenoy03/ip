@@ -303,12 +303,10 @@ public class JongBot {
     private static void ensureFileExists(String filePath) {
         try {
             File file = new File(filePath);
-
             File parent = file.getParentFile();
             if (parent != null && !parent.exists()) {
                 parent.mkdirs();   // create ./data directory
             }
-
             if (!file.exists()) {
                 file.createNewFile();   // create tasks.txt
             }
