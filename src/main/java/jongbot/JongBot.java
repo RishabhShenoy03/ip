@@ -24,19 +24,18 @@ import static jongbot.MyConstants.newline;
 public class JongBot {
 
     private static ArrayList<Task> list = new ArrayList<>();
-    private static String tasksFilePath = "data/tasks.txt";
+    private static final String tasksFilePath = "data/tasks.txt";
     private static File f = new File(tasksFilePath);
 
     public static void main(String[] args) {
-
         System.out.println("full path: " + f.getAbsolutePath());
         System.out.println("file exists?: " + f.exists());
         System.out.println("is Directory?: " + f.isDirectory());
 
         welcomeMessage();
 
-        ensureFileExists(tasksFilePath);
-        loadTasksFromFile(tasksFilePath);
+        ensureFileExists();
+        loadTasksFromFile();
 
         String input;
         Scanner in = new Scanner(System.in);
@@ -57,9 +56,9 @@ public class JongBot {
                 command = trimmed.substring(0, firstSpace);
                 arguments = trimmed.substring(firstSpace + 1).trim();
             }
-
             newline();
             dashLine();
+
             try {
                 switch (command) {
                 case "todo":
@@ -109,19 +108,14 @@ public class JongBot {
         if (arguments.isBlank()) {
             throw new EmptyTodoException();
         }
-
         Todo todo = new Todo(arguments);
         list.add(todo);
+        addTaskToFile(todo);
         echoTodo(arguments);
     }
 
     private static void handleBye() {
         System.out.println("Bye bye! See you soon!");
-        try {
-            writeToFile(tasksFilePath, list);
-        } catch (IOException e) {
-            System.out.println("Error writing to file!");
-        }
         dashLine();
     }
 
@@ -142,6 +136,7 @@ public class JongBot {
         String to = arguments.substring(toIndex + 3).trim();
         Event event = new Event(description, from, to);
         list.add(event);
+        addTaskToFile(event);
         echoEvent(description, from, to);
     }
 
@@ -160,6 +155,7 @@ public class JongBot {
         String by = arguments.substring(byIndex + 3).trim();
         Deadline deadline = new Deadline(description, by);
         list.add(deadline);
+        addTaskToFile(deadline);
 
         echoDeadline(description, by);
     }
@@ -170,8 +166,8 @@ public class JongBot {
             throw new TaskIndexException();
         }
         list.get(taskIndex - 1).unmarkTask();
+        writeWholeListToFile();
         System.out.println("Task " + taskIndex + " has been unmarked");
-
     }
 
     private static void markTask(String arguments) throws JongExceptions {
@@ -180,11 +176,22 @@ public class JongBot {
             throw new TaskIndexException();
         }
         list.get(taskIndex - 1).markTask();
+        writeWholeListToFile();
         System.out.println("Task " + taskIndex + " has been marked");
 
     }
 
-
+    private static void writeWholeListToFile() {
+        try {
+            FileWriter fw = new FileWriter(tasksFilePath);
+            for (Task task : list) {
+                fw.write(task.toDataString() + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to file!");
+        }
+    }
 
     public static void handleList() throws JongExceptions {
         if (list.isEmpty()) {
@@ -203,6 +210,7 @@ public class JongBot {
             throw new TaskIndexException();
         }
         list.remove(taskIndex - 1);
+        writeWholeListToFile();
         System.out.println("Task " + taskIndex + " has been deleted");
     }
 
@@ -234,20 +242,11 @@ public class JongBot {
         newline();
     }
 
-    private static void writeToFile(String filePath, ArrayList<Task> list) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        for (Task task : list) {
-            fw.write(task.toDataString() + "\n");
-        }
-        fw.close();
-    }
-
     private static void handleFileLine(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) {
             return;
         }
-
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
@@ -277,8 +276,8 @@ public class JongBot {
         }
     }
 
-    private static void loadTasksFromFile(String filePath){
-        File file = new File(filePath);
+    private static void loadTasksFromFile(){
+        File file = new File(tasksFilePath );
         if (!file.exists()) {
             return;
         }
@@ -294,13 +293,13 @@ public class JongBot {
             dashLine();
             newline();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filePath);
+            System.out.println("File not found: " + tasksFilePath);
         }
     }
 
-    private static void ensureFileExists(String filePath) {
+    private static void ensureFileExists() {
         try {
-            File file = new File(filePath);
+            File file = new File(tasksFilePath);
 
             File parent = file.getParentFile();
             if (parent != null && !parent.exists()) {
@@ -321,5 +320,13 @@ public class JongBot {
         }
     }
 
-
+    private static void addTaskToFile(Task task) {
+        try {
+            FileWriter fw = new FileWriter(tasksFilePath,true);
+            fw.write(task.toDataString() + "\n");
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to file!");
+        }
+    }
 }
