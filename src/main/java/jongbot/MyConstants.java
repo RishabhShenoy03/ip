@@ -14,10 +14,16 @@ public class MyConstants {
             Use "mark" / "unmark" / "delete" followed by the task index to do... exactly that
             Use "find <word> to find tasks containing that word""";
 
+    /**
+     * Prints a blank line to the console.
+     */
     public static void newline() {
         System.out.println();
     }
 
+    /**
+     * Prints a horizontal line separator to the console.
+     */
     public static void dashLine() {
         System.out.println("----------------------------------------");
     }
