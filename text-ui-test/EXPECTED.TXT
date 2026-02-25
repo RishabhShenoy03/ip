@@ -1,74 +1,166 @@
+
+Hello! My name is JongBot
+I am here to help you manage your todos, deadlines, and events.
+How may I help you?
+Type "help" to see all commands
+
 ----------------------------------------
 Use "todo", "deadline", "event" to add a task to the list
 Use "list" to see all tasks
 Use "mark" / "unmark" / "delete" followed by the task index to do... exactly that
+Use "find <word> to find tasks containing that word
 ----------------------------------------
 
-
 ----------------------------------------
-Here's your list:
-1:[T][ ] read book
-2:[E][ ] team meeting (from: sunday to: monday)
+List is empty. Insert some stuff bro :P
 ----------------------------------------
-
 
 ----------------------------------------
 Adding this task to the list:
-[T][ ] read book
+[T][ ] buy groceries
+Number of tasks in list: 1
+----------------------------------------
+
+----------------------------------------
+Adding this task to the list:
+[T][ ] read textbook chapter 5
+Number of tasks in list: 2
+----------------------------------------
+
+----------------------------------------
+Adding this task to the list:
+[T][ ] complete homework
 Number of tasks in list: 3
 ----------------------------------------
 
-
 ----------------------------------------
 Adding this task to the list:
-[D][ ] submit report (do by: 2026-03-01)
+[T][ ] visit bookshop
 Number of tasks in list: 4
 ----------------------------------------
 
-
 ----------------------------------------
 Adding this task to the list:
-[E][ ] team meeting (from: sunday, to: monday)
+[D][ ] CS2113 assignment (by: Friday 5pm)
 Number of tasks in list: 5
 ----------------------------------------
 
+----------------------------------------
+Adding this task to the list:
+[D][ ] library book return (by: next Monday)
+Number of tasks in list: 6
+----------------------------------------
+
+----------------------------------------
+Adding this task to the list:
+[E][ ] team meeting (from: 2pm to: 4pm)
+Number of tasks in list: 7
+----------------------------------------
+
+----------------------------------------
+Adding this task to the list:
+[E][ ] project presentation (from: Monday 10am to: 11am)
+Number of tasks in list: 8
+----------------------------------------
 
 ----------------------------------------
 Here's your list:
-1:[T][ ] read book
-2:[E][ ] team meeting (from: sunday to: monday)
-3:[T][ ] read book
-4:[D][ ] submit report (by: 2026-03-01)
-5:[E][ ] team meeting (from: sunday to: monday)
+1:[T][ ] buy groceries
+2:[T][ ] read textbook chapter 5
+3:[T][ ] complete homework
+4:[T][ ] visit bookshop
+5:[D][ ] CS2113 assignment (by: Friday 5pm)
+6:[D][ ] library book return (by: next Monday)
+7:[E][ ] team meeting (from: 2pm to: 4pm)
+8:[E][ ] project presentation (from: Monday 10am to: 11am)
 ----------------------------------------
-
 
 ----------------------------------------
 Task 1 has been marked
 ----------------------------------------
 
+----------------------------------------
+Task 3 has been marked
+----------------------------------------
+
+----------------------------------------
+Task 5 has been marked
+----------------------------------------
+
+----------------------------------------
+Here's your list:
+1:[T][X] buy groceries
+2:[T][ ] read textbook chapter 5
+3:[T][X] complete homework
+4:[T][ ] visit bookshop
+5:[D][X] CS2113 assignment (by: Friday 5pm)
+6:[D][ ] library book return (by: next Monday)
+7:[E][ ] team meeting (from: 2pm to: 4pm)
+8:[E][ ] project presentation (from: Monday 10am to: 11am)
+----------------------------------------
 
 ----------------------------------------
 Task 1 has been unmarked
 ----------------------------------------
 
+----------------------------------------
+Here's your list:
+1:[T][ ] buy groceries
+2:[T][ ] read textbook chapter 5
+3:[T][X] complete homework
+4:[T][ ] visit bookshop
+5:[D][X] CS2113 assignment (by: Friday 5pm)
+6:[D][ ] library book return (by: next Monday)
+7:[E][ ] team meeting (from: 2pm to: 4pm)
+8:[E][ ] project presentation (from: Monday 10am to: 11am)
+----------------------------------------
 
 ----------------------------------------
-Task 2 has been deleted
+Here are the matching tasks:
+1:[D][ ] library book return (by: next Monday)
 ----------------------------------------
 
+----------------------------------------
+Here are the matching tasks:
+1:[E][ ] team meeting (from: 2pm to: 4pm)
+----------------------------------------
+
+----------------------------------------
+Here are the matching tasks:
+----------------------------------------
+
+----------------------------------------
+Task 7 has been deleted
+----------------------------------------
 
 ----------------------------------------
 Here's your list:
-1:[T][ ] read book
-2:[T][ ] read book
-3:[D][ ] submit report (by: 2026-03-01)
-4:[E][ ] team meeting (from: sunday to: monday)
+1:[T][ ] buy groceries
+2:[T][ ] read textbook chapter 5
+3:[T][X] complete homework
+4:[T][ ] visit bookshop
+5:[D][X] CS2113 assignment (by: Friday 5pm)
+6:[D][ ] library book return (by: next Monday)
+7:[E][ ] project presentation (from: Monday 10am to: 11am)
 ----------------------------------------
 
+----------------------------------------
+Invalid task index. use "list" to see all tasks
+----------------------------------------
+
+----------------------------------------
+Todo description cannot be empty. Try "todo homework"
+----------------------------------------
+
+----------------------------------------
+Please include /by for any deadlines!!
+For example: "deadline homework /by tomorrow"
+----------------------------------------
+
+----------------------------------------
+Please include /from and /to for any events!!
+For example: "event homework /from 10am /to 1pm"
+----------------------------------------
 
 ----------------------------------------
 Bye bye! See you soon!
-----------------------------------------
-
-Process finished with exit code 0

@@ -1,11 +1,27 @@
 help
 list
-todo read book
-deadline submit report /by 2026-03-01
-event team meeting /from sunday /to monday
+todo buy groceries
+todo read textbook chapter 5
+todo complete homework
+todo visit bookshop
+deadline CS2113 assignment /by Friday 5pm
+deadline library book return /by next Monday
+event team meeting /from 2pm /to 4pm
+event project presentation /from Monday 10am /to 11am
 list
 mark 1
-unmark 1
-delete 2
+mark 3
+mark 5
 list
+unmark 1
+list
+find book
+find meeting
+find unicorn
+delete 7
+list
+mark 10
+todo
+deadline assignment
+event party /from 8pm
 bye
