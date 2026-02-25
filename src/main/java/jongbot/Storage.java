@@ -13,11 +13,22 @@ public class Storage {
 
     private final String tasksFilePath;
 
+    /**
+     * Creates a storage handler for the given file path.
+     *
+     * @param tasksFilePath Path to the tasks file.
+     */
     public Storage(String tasksFilePath) {
         this.tasksFilePath = tasksFilePath;
         ensureFileExists();
     }
 
+    /**
+     * Loads tasks from the backing file.
+     *
+     * @return List of loaded tasks.
+     * @throws JongExceptions If loading fails.
+     */
     public ArrayList<Task> load() throws JongExceptions {
         ArrayList<Task> loaded = new ArrayList<>();
         File file = new File(tasksFilePath);
@@ -37,6 +48,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves all tasks to the backing file, overwriting existing content.
+     *
+     * @param tasks Task list to persist.
+     * @throws JongExceptions If saving fails.
+     */
     public void save(TaskList tasks) throws JongExceptions {
         try (FileWriter fw = new FileWriter(tasksFilePath)) {
             for (Task task : tasks.getTasks()) {
