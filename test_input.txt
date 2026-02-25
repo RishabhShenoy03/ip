@@ -1,1 +1,11 @@
-
+help
+list
+todo read book
+deadline submit report /by 2026-03-01
+event team meeting /from sunday /to monday
+list
+mark 1
+unmark 1
+delete 2
+list
+bye
