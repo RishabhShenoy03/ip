@@ -12,7 +12,8 @@ public class MyConstants {
             Use "todo", "deadline", "event" to add a task to the list
             Use "list" to see all tasks
             Use "mark" / "unmark" / "delete" followed by the task index to do... exactly that
-            Use "find <word> to find tasks containing that word""";
+            Use "find <word> to find tasks containing that word
+            (Doesn't work if part of another word i.e find team won't match with teamwork)""";
 
     public static void newline() {
         System.out.println();
