@@ -1,0 +1,13 @@
+T | 0 | buy groceries
+T | 0 | read book
+D | 1 | submit assignment | Friday 5pm
+D | 0 | return library book | next Monday
+T | 0 | read book
+D | 0 | submit assignment | Friday 5pm
+D | 0 | return library book | next Monday
+E | 0 | team meeting | 2pm | 4pm
+T | 0 | buy groceries
+D | 0 | submit assignment | Friday 5pm
+D | 0 | return library book | next Monday
+E | 0 | team meeting | 2pm | 4pm
+E | 0 | project presentation | Monday 10am | Monday 11am
