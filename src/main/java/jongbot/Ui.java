@@ -1,6 +1,5 @@
 package jongbot;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import jongbot.exceptions.EmptyListException;
@@ -72,12 +71,5 @@ public class Ui {
 
     public void showBye() {
         System.out.println("Bye bye! See you soon!");
-    }
-
-    public void showMatched(TaskList matchedTasks){
-        System.out.println("Here are the matching tasks:");
-        for (int i = 0; i < matchedTasks.size(); i++) {
-            System.out.println((i + 1) + ":" + matchedTasks.getTasks().get(i));
-        }
     }
 }

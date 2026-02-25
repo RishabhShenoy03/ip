@@ -31,21 +31,23 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public void delete(String indexString) throws TaskIndexException {
+    public Task delete(String indexString) throws TaskIndexException {
         int index = parseIndex(indexString);
-        tasks.remove(index - 1);
+        return tasks.remove(index - 1);
     }
 
-    public void mark(String indexString) throws TaskIndexException {
+    public Task mark(String indexString) throws TaskIndexException {
         int index = parseIndex(indexString);
         Task task = tasks.get(index - 1);
         task.markTask();
+        return task;
     }
 
-    public void unmark(String indexString) throws TaskIndexException {
+    public Task unmark(String indexString) throws TaskIndexException {
         int index = parseIndex(indexString);
         Task task = tasks.get(index - 1);
         task.unmarkTask();
+        return task;
     }
 
     private int parseIndex(String indexString) throws TaskIndexException {
@@ -58,17 +60,5 @@ public class TaskList {
         } catch (NumberFormatException e) {
             throw new TaskIndexException();
         }
-    }
-
-    public TaskList findMatches(String arguments){
-        TaskList matchedTasks = new TaskList();
-        for (Task task : tasks) {
-            // pad space on both sides to find word itself (not part of other words)
-            String description = " " + task.description.toLowerCase() + " ";
-            if (description.contains(" " + arguments + " ")){
-                matchedTasks.add(task);
-            }
-        }
-        return matchedTasks;
     }
 }
