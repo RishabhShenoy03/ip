@@ -8,8 +8,6 @@ import jongbot.exceptions.MissingDeadlineException;
 import jongbot.exceptions.MissingEventTimeException;
 import jongbot.exceptions.NotAnyException;
 
-import java.util.ArrayList;
-
 public class Parser {
 
     public ParsedCommand parseCommand(String input) throws JongExceptions {
@@ -72,10 +70,6 @@ public class Parser {
             return false;
         case "help":
             ui.showHelp();
-            return false;
-        case "find":
-            TaskList matchedTasks = tasks.findMatches(parsed.arguments);
-            ui.showMatched(matchedTasks);
             return false;
         default:
             throw new jongbot.exceptions.NotAnyException();
