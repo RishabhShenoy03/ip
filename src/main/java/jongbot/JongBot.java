@@ -9,6 +9,11 @@ public class JongBot {
     private Ui ui;
     private Parser parser;
 
+    /**
+     * Creates a JongBot instance backed by the given file path.
+     *
+     * @param tasksFilePath Path to the tasks file.
+     */
     public JongBot(String tasksFilePath) {
         ui = new Ui();
         storage = new Storage(tasksFilePath);
@@ -21,6 +26,9 @@ public class JongBot {
         }
     }
 
+    /**
+     * Runs the main input-processing loop.
+     */
     public void run() {
         ui.showWelcome();
         while (true) {
@@ -42,6 +50,11 @@ public class JongBot {
         }
     }
 
+    /**
+     * Program entry point.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         new JongBot("data/tasks.txt").run();
     }

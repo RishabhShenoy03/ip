@@ -8,10 +8,15 @@ import jongbot.exceptions.MissingDeadlineException;
 import jongbot.exceptions.MissingEventTimeException;
 import jongbot.exceptions.NotAnyException;
 
-import java.util.ArrayList;
-
 public class Parser {
 
+    /**
+     * Parses a raw input string into a command and arguments.
+     *
+     * @param input Raw user input.
+     * @return Parsed command.
+     * @throws JongExceptions If input is empty.
+     */
     public ParsedCommand parseCommand(String input) throws JongExceptions {
         String trimmed = input == null ? "" : input.trim();
         if (trimmed.isEmpty()) {
@@ -28,6 +33,16 @@ public class Parser {
         return new ParsedCommand(command, arguments);
     }
 
+    /**
+     * Executes a command against the given collaborators.
+     *
+     * @param input   Raw user input.
+     * @param tasks   Task list.
+     * @param storage Storage handler.
+     * @param ui      UI handler.
+     * @return True if the program should exit.
+     * @throws JongExceptions If command parsing or execution fails.
+     */
     public boolean execute(String input, TaskList tasks, Storage storage, Ui ui) throws JongExceptions {
         ParsedCommand parsed = parseCommand(input);
         switch (parsed.command) {
@@ -73,15 +88,18 @@ public class Parser {
         case "help":
             ui.showHelp();
             return false;
-        case "find":
-            TaskList matchedTasks = tasks.findMatches(parsed.arguments);
-            ui.showMatched(matchedTasks);
-            return false;
         default:
             throw new jongbot.exceptions.NotAnyException();
         }
     }
 
+    /**
+     * Parses a todo task from arguments.
+     *
+     * @param arguments Raw arguments.
+     * @return Todo task.
+     * @throws JongExceptions If arguments are invalid.
+     */
     public Task parseTodo(String arguments) throws JongExceptions {
         if (arguments.isBlank()) {
             throw new EmptyTodoException();
@@ -89,6 +107,13 @@ public class Parser {
         return new Todo(arguments);
     }
 
+    /**
+     * Parses a deadline task from arguments.
+     *
+     * @param arguments Raw arguments.
+     * @return Deadline task.
+     * @throws JongExceptions If arguments are invalid.
+     */
     public Task parseDeadline(String arguments) throws JongExceptions {
         int byIndex = arguments.indexOf("/by");
         if (arguments.isBlank()) {
@@ -102,6 +127,13 @@ public class Parser {
         return new Deadline(description, by);
     }
 
+    /**
+     * Parses an event task from arguments.
+     *
+     * @param arguments Raw arguments.
+     * @return Event task.
+     * @throws JongExceptions If arguments are invalid.
+     */
     public Task parseEvent(String arguments) throws JongExceptions {
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
@@ -123,6 +155,12 @@ public class Parser {
         public final String command;
         public final String arguments;
 
+        /**
+         * Creates a parsed command.
+         *
+         * @param command   Command word.
+         * @param arguments Remainder of the input.
+         */
         public ParsedCommand(String command, String arguments) {
             this.command = command;
             this.arguments = arguments;

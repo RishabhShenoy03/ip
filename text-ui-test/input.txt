@@ -1,11 +1,28 @@
 help
 list
+todo
+deadline
+event
+randomcommand
+todo buy groceries
 todo read book
-deadline submit report /by 2026-03-01
-event team meeting /from sunday /to monday
+deadline submit assignment /by Friday 5pm
+deadline return library book /by next Monday
+event team meeting /from 2pm /to 4pm
+event project presentation /from Monday 10am /to Monday 11am
 list
 mark 1
-unmark 1
-delete 2
+mark 3
 list
+unmark 1
+list
+delete 5
+list
+delete 10
+delete abc
+mark 99
+todo
+deadline homework
+event party /from 8pm
+find book
 bye
