@@ -3,6 +3,12 @@ package jongbot;
 public class Deadline extends Task {
     protected String by;
 
+    /**
+     * Constructs a Deadline task with the given description and deadline.
+     *
+     * @param description The description of the deadline task.
+     * @param by The deadline by which the task should be completed.
+     */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;

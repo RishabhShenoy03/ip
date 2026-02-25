@@ -13,11 +13,23 @@ public class Storage {
 
     private final String tasksFilePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     * Ensures that the file and its parent directories exist.
+     *
+     * @param tasksFilePath The path to the file where tasks will be stored.
+     */
     public Storage(String tasksFilePath) {
         this.tasksFilePath = tasksFilePath;
         ensureFileExists();
     }
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return An ArrayList of Task objects loaded from the file.
+     * @throws JongExceptions If there is an error reading from the file.
+     */
     public ArrayList<Task> load() throws JongExceptions {
         ArrayList<Task> loaded = new ArrayList<>();
         File file = new File(tasksFilePath);
@@ -37,6 +49,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the given TaskList to the storage file.
+     *
+     * @param tasks The TaskList to be saved.
+     * @throws JongExceptions If there is an error writing to the file.
+     */
     public void save(TaskList tasks) throws JongExceptions {
         try (FileWriter fw = new FileWriter(tasksFilePath)) {
             for (Task task : tasks.getTasks()) {
