@@ -1,26 +1,119 @@
-# Duke project template
+# JongBot User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+JongBot is a simple command-line task manager for organizing your todos, deadlines, and events. All tasks are automatically saved!
 
-## Setting up in Intellij
+---
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## Quick Start
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+1. Ensure Java 17 is installed
+2. Download `ip.jar`
+3. Run: `java -jar ip.jar`
+4. Start typing commands!
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+---
+
+## Commands
+
+### `help` - Show available commands
+```
+help
+```
+
+### `todo DESCRIPTION` - Add a simple task
+```
+todo buy groceries
+todo read chapter 5
+```
+
+### `deadline DESCRIPTION /by DATE` - Add task with deadline
+```
+deadline homework /by Friday 5pm
+deadline return book /by next Monday
+```
+⚠️ Must include `/by` keyword
+
+### `event DESCRIPTION /from START /to END` - Add event with time period
+```
+event meeting /from 2pm /to 4pm
+event conference /from Monday /to Wednesday
+```
+⚠️ Must include both `/from` and `/to` keywords
+
+### `list` - View all tasks
+```
+list
+```
+Shows tasks with status: `[ ]` = not done, `[X]` = done
+
+### `mark INDEX` - Mark task as done
+```
+mark 1
+mark 3
+```
+
+### `unmark INDEX` - Mark task as not done
+```
+unmark 2
+```
+
+### `delete INDEX` - Delete a task permanently
+```
+delete 4
+```
+
+### `find KEYWORD` - Search tasks by keyword
+```
+find book
+find meeting
+```
+Searches whole words only (case-insensitive)
+
+### `bye` - Exit the application
+```
+bye
+```
+
+---
+
+## Quick Reference
+
+| Command | Format | Example |
+|---------|--------|---------|
+| Help | `help` | `help` |
+| Todo | `todo DESCRIPTION` | `todo buy milk` |
+| Deadline | `deadline DESC /by DATE` | `deadline essay /by Friday` |
+| Event | `event DESC /from START /to END` | `event party /from 8pm /to 11pm` |
+| List | `list` | `list` |
+| Mark | `mark INDEX` | `mark 1` |
+| Unmark | `unmark INDEX` | `unmark 2` |
+| Delete | `delete INDEX` | `delete 3` |
+| Find | `find KEYWORD` | `find book` |
+| Exit | `bye` | `bye` |
+
+---
+
+## Task Types
+
+- **`[T]`** - Todo: Simple task
+- **`[D]`** - Deadline: Task with due date
+- **`[E]`** - Event: Task with time period
+
+---
+
+## Notes
+
+✅ Tasks are auto-saved to `data/tasks.txt`  
+✅ Use any date format (e.g., "tomorrow", "2026-03-15", "next Friday")  
+✅ Multi-word descriptions are supported  
+✅ Task indices start from 1  
+⚠️ Don't manually edit the data file
+
+---
+
+## Common Errors
+
+- **Empty description?** Include a description for all tasks
+- **Missing `/by`, `/from`, or `/to`?** Check your deadline/event format
+- **Invalid index?** Use `list` to see valid task numbers
+- **Unknown command?** Type `help` for available commands

@@ -6,9 +6,9 @@ JongBot is a simple command-line task manager for organizing your todos, deadlin
 
 ## Quick Start
 
-1. Ensure Java 11+ is installed
-2. Download `jongbot.jar`
-3. Run: `java -jar jongbot.jar`
+1. Ensure Java 17 is installed
+2. Download `ip.jar`
+3. Run: `java -jar ip.jar`
 4. Start typing commands!
 
 ---
